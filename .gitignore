@@ -1,0 +1,5 @@
+# Project exclude paths
+/client/target/
+/server/target/
+/chat_fx_21092020_java_3.iml
+/main1.db

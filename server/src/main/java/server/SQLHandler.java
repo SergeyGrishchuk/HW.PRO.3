@@ -14,7 +14,7 @@ public class SQLHandler {
     public static boolean connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:main.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:main1.db");
             prepareAllStatements();
             return true;
         } catch (SQLException e) {
@@ -30,22 +30,6 @@ public class SQLHandler {
         psGetNickname = connection.prepareStatement("SELECT nickname FROM users WHERE login = ? AND password = ?;");
         psRegistration = connection.prepareStatement("INSERT INTO users(login, password, nickname) VALUES (? ,? ,? );");
         psChangeNick = connection.prepareStatement("UPDATE users SET nickname = ? WHERE nickname = ?;");
-
-
-        psAddMessage = connection.prepareStatement("INSERT INTO messages (sender, receiver, text, date) VALUES (\n" +
-                "(SELECT id FROM users WHERE nickname=?),\n" +
-                "(SELECT id FROM users WHERE nickname=?),\n" +
-                "?, ?)");
-
-
-        psGetMessageForNick = connection.prepareStatement("SELECT (SELECT nickname FROM users Where id = sender), \n" +
-                "       (SELECT nickname FROM users Where id = receiver),\n" +
-                "       text,\n" +
-                "       date \n" +
-                "FROM messages \n" +
-                "WHERE sender = (SELECT id FROM users WHERE nickname=?)\n" +
-                "OR receiver = (SELECT id FROM users WHERE nickname=?)\n" +
-                "OR receiver = (SELECT id FROM users WHERE nickname='null')");
 
     }
 
